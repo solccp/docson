@@ -242,7 +242,13 @@ define(["lib/jquery", "lib/handlebars", "lib/highlight", "lib/jsonpointer", "lib
             return root;
         }
         try {
-            return jsonpointer.get(stack[1], ref);
+            var i;
+            for(i=stack.length-1; i>=1; i--) {
+                value = jsonpointer.get(stack[i], ref);
+                if (value)
+                    return value;
+            }
+            return null;
         } catch(e) {
             console.log(e);
             return null;
